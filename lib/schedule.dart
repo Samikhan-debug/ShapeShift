@@ -3,7 +3,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 class ScheduleView extends StatefulWidget {
-  const ScheduleView({Key? key});
+  const ScheduleView({super.key});
 
   @override
   State<ScheduleView> createState() => _ScheduleViewState();
@@ -79,7 +79,7 @@ class _ScheduleViewState extends State<ScheduleView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Padding(
@@ -212,6 +212,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                           ),
                         );
                       }
+                      return null;
                     },
                   ),
                   const Padding(

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/WaterPlan.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
 
@@ -10,9 +13,16 @@ class WaterApp extends StatefulWidget {
 }
 
 class _WaterAppState extends State<WaterApp> {
+  DatabaseService _dbService = DatabaseService();
   double percentage = 0.0;
   int filledGlasses = 0;
   List<DateTime> filledTimes = [];
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
 
   void fillGlass() {
     setState(() {
@@ -23,6 +33,13 @@ class _WaterAppState extends State<WaterApp> {
           percentage = 100.0;
         }
         filledTimes.add(DateTime.now());
+
+        WaterDB waterData = WaterDB(
+          userID: 'samikhan@gmail.com',
+          isClicked: true,
+          Date: DateTime.now(),
+        );
+        _dbService.addUser(waterData);
       }
     });
   }
@@ -32,7 +49,39 @@ class _WaterAppState extends State<WaterApp> {
       filledGlasses = 0;
       percentage = 0.0;
       filledTimes.clear();
+      _dbService.deleteAllUserRecords("samikhan@gmail.com");
+      print("User Info Deleted");
     });
+  }
+
+  Future<void> fetchData() async {
+    DateTime today = DateTime.now();
+    String userID = 'samikhan@gmail.com';
+
+    _dbService
+        .getUserWaterLevel(userID, today)
+        .listen((QuerySnapshot<WaterDB> snapshot) {
+      print(snapshot.docs);
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {
+          int numberOfEntries = snapshot.docs.length;
+          filledGlasses = numberOfEntries > 8 ? 8 : numberOfEntries;
+          percentage = filledGlasses * 12.5;
+          filledTimes.clear();
+          snapshot.docs.forEach((doc) {
+            filledTimes.add(doc.data().Date);
+          });
+        });
+      } else {
+        setState(() {
+          filledGlasses = 0;
+          percentage = 0.0;
+          filledTimes.clear();
+        });
+      }
+    });
+    // List<Map<String, dynamic>> waterData = await _dbService.getUserData(userID);
+    // print(waterData);
   }
 
   @override
@@ -108,7 +157,9 @@ class _WaterAppState extends State<WaterApp> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: fillGlass,
+                  onPressed: () {
+                    fillGlass();
+                  },
                   child: Icon(Icons.wine_bar),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,

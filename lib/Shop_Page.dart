@@ -20,6 +20,8 @@ import 'package:flutter_application_1/game.dart';
 import 'package:flutter_application_1/schedule.dart';
 
 class Shop_Page extends StatefulWidget {
+  const Shop_Page({super.key});
+
   @override
   _ShopPageState createState() => _ShopPageState();
 }
@@ -37,8 +39,8 @@ class _ShopPageState extends State<Shop_Page> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.blue,
-        color: Color(0xFF1C2757),
-        animationDuration: Duration(milliseconds: 300),
+        color: const Color(0xFF1C2757),
+        animationDuration: const Duration(milliseconds: 300),
         onTap: (index) {
           switch (index) {
             case 0:
@@ -50,13 +52,13 @@ class _ShopPageState extends State<Shop_Page> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Shop_Page()),
+                MaterialPageRoute(builder: (context) => const Shop_Page()),
               );
               break;
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AccountScreen()),
+                MaterialPageRoute(builder: (context) => const AccountScreen()),
               );
               break;
           }
@@ -79,7 +81,7 @@ class _ShopPageState extends State<Shop_Page> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CarouselSlider(
@@ -103,7 +105,7 @@ class _ShopPageState extends State<Shop_Page> {
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(25))),
                   Container(
-                      margin: EdgeInsets.all(8),
+                      margin: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           color: Colors.black,
                           image: const DecorationImage(
@@ -138,12 +140,12 @@ class _ShopPageState extends State<Shop_Page> {
                     enlargeCenterPage: true,
                     enlargeFactor: 0.5)),
             FadeInUp(
-                duration: Duration(milliseconds: 1400),
+                duration: const Duration(milliseconds: 1400),
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     children: <Widget>[
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
@@ -155,10 +157,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      SizedBox(
                         height: 118,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -174,10 +176,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
@@ -189,10 +191,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      SizedBox(
                         height: 118,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -216,10 +218,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
@@ -231,10 +233,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      SizedBox(
                         height: 118,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -258,10 +260,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
@@ -273,10 +275,10 @@ class _ShopPageState extends State<Shop_Page> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      SizedBox(
                         height: 118,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -292,7 +294,7 @@ class _ShopPageState extends State<Shop_Page> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 80,
                       ),
                     ],
@@ -316,13 +318,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -334,7 +336,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -362,13 +364,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -380,7 +382,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
@@ -408,13 +410,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -426,7 +428,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
@@ -454,13 +456,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -472,7 +474,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -495,18 +497,18 @@ class _ShopPageState extends State<Shop_Page> {
             // Navigate to the RegistrationScreen when the button is pressed
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Alarm()),
+              MaterialPageRoute(builder: (context) => const Alarm()),
             );
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -518,7 +520,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -546,13 +548,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -564,7 +566,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -592,13 +594,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -610,7 +612,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
@@ -633,18 +635,18 @@ class _ShopPageState extends State<Shop_Page> {
             // Navigate to the RegistrationScreen when the button is pressed
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ScheduleView()),
+              MaterialPageRoute(builder: (context) => const ScheduleView()),
             );
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -656,7 +658,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
@@ -679,18 +681,18 @@ class _ShopPageState extends State<Shop_Page> {
             // Navigate to the RegistrationScreen when the button is pressed
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => WaterApp()),
+              MaterialPageRoute(builder: (context) => const WaterApp()),
             );
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -702,7 +704,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -725,18 +727,19 @@ class _ShopPageState extends State<Shop_Page> {
             // Navigate to the RegistrationScreen when the button is pressed
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PhotoProgressView()),
+              MaterialPageRoute(
+                  builder: (context) => const PhotoProgressView()),
             );
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -748,7 +751,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -776,13 +779,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -794,7 +797,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
@@ -822,13 +825,13 @@ class _ShopPageState extends State<Shop_Page> {
           },
           child: Material(
             child: Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       image: AssetImage(image), fit: BoxFit.cover)),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient:
@@ -840,7 +843,7 @@ class _ShopPageState extends State<Shop_Page> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 13),
