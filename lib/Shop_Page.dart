@@ -1,0 +1,855 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Calculator.dart';
+
+import 'package:flutter_application_1/Home.dart';
+import 'package:flutter_application_1/Progress.dart';
+import 'package:flutter_application_1/Settings.dart';
+
+import 'package:flutter_application_1/Timer.dart';
+import 'package:flutter_application_1/Tip.dart';
+import 'package:flutter_application_1/Water.dart';
+import 'package:flutter_application_1/Workout_builder.dart';
+import 'package:flutter_application_1/alarm.dart';
+import 'package:flutter_application_1/counter.dart';
+import 'package:flutter_application_1/game.dart';
+
+import 'package:flutter_application_1/schedule.dart';
+
+class Shop_Page extends StatefulWidget {
+  @override
+  _ShopPageState createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<Shop_Page> {
+  final List<String> imgList = [
+    'assets/watch.jpg',
+    'assets/tick.png',
+    'assets/run.jpg',
+    // Add your image paths here
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.blue,
+        color: Color(0xFF1C2757),
+        animationDuration: Duration(milliseconds: 300),
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Program()),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Shop_Page()),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AccountScreen()),
+              );
+              break;
+          }
+        },
+        items: const [
+          Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.favorite,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 30,
+            ),
+            CarouselSlider(
+                items: [
+                  Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: const DecorationImage(
+                              image: AssetImage("assets/27.jpg"),
+                              fit: BoxFit.cover
+                              // image: NetworkImage("https://media.istockphoto.com/id/1409298953/photo/real-estate-agents-shake-hands-after-the-signing-of-the-contract-agreement-is-complete.jpg?s=1024x1024&w=is&k=20&c=Q7y-IUDhsXhiKKDPopD1ZRHRvkeunhledaJ2iMRdEr8="))
+                              ),
+                          borderRadius: BorderRadius.circular(25))),
+                  Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: const DecorationImage(
+                              image: AssetImage("assets/33.jpg"),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(25))),
+                  Container(
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: const DecorationImage(
+                              image: AssetImage("assets/29.jpg"),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(25))),
+                  Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: const DecorationImage(
+                              image: AssetImage("assets/35.jpg"),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(25))),
+                  Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: const DecorationImage(
+                              image: AssetImage("assets/37.jpg"),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(25))),
+                ],
+                options: CarouselOptions(
+                    height: 180,
+                    aspectRatio: 16 / 8,
+                    viewportFraction: 0.8,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 500),
+                    enlargeCenterPage: true,
+                    enlargeFactor: 0.5)),
+            FadeInUp(
+                duration: Duration(milliseconds: 1400),
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Essentials",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 118,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            makeCategory(
+                                image: 'assets/10.png',
+                                title: 'Home',
+                                tag: 'home'),
+                            makeCategory1(
+                                image: 'assets/11.png',
+                                title: 'BMI Calculator',
+                                tag: 'bmi'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Wellness Toolbox",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 118,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            makeCategory5(
+                                image: 'assets/12.jpg',
+                                title: 'Water Plan',
+                                tag: 'water'),
+                            makeCategory6(
+                                image: 'assets/13.png',
+                                title: 'Camera',
+                                tag: 'camera'),
+                            makeCategory10(
+                                image: 'assets/run.jpg',
+                                title: 'Workout Builder',
+                                tag: 'builder'),
+                            makeCategory11(
+                                image: 'assets/14.png',
+                                title: 'FitFunFlex',
+                                tag: 'fun'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Time Management",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 118,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            makeCategory9(
+                                image: 'assets/15.png',
+                                title: 'Alarms',
+                                tag: 'alarm'),
+                            makeCategory4(
+                                image: 'assets/16.png',
+                                title: 'Schedule',
+                                tag: 'calender'),
+                            makeCategory2(
+                                image: 'assets/17.png',
+                                title: 'Stopwatch',
+                                tag: 'stopwatch'),
+                            makeCategory3(
+                                image: 'assets/18.png',
+                                title: 'Timer',
+                                tag: 'timer'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Configuration Corner",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 118,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            makeCategory7(
+                                image: 'assets/19.png',
+                                title: 'Settings',
+                                tag: 'setting'),
+                            makeCategory8(
+                                image: 'assets/20.png',
+                                title: 'FAQs',
+                                tag: 'questions'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 80,
+                      ),
+                    ],
+                  ),
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Program()));
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory1({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BMICalculatorScreen()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory2({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeApp()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory3({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CountdownPage()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory9({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Alarm()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory8({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FAQScreen()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory7({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AccountScreen()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory4({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ScheduleView()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory5({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WaterApp()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory6({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PhotoProgressView()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory10({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ExerciseScreen()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory11({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            // Navigate to the RegistrationScreen when the button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GameScreen()),
+            );
+          },
+          child: Material(
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
