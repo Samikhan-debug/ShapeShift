@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/Calendar.dart';
+import 'package:flutter_application_1/model/WaterPlan.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -15,6 +19,27 @@ class _ScheduleViewState extends State<ScheduleView> {
   Map<DateTime, String> notesMap = {};
   TextEditingController noteController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  DatabaseService _dbService = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> fetchData() async {
+    DateTime today = DateTime.now();
+    String userID = 'samikhan@gmail.com';
+
+    _dbService
+        .getUserNotes(userID, today)
+        .listen((QuerySnapshot<CalendarDB> snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {});
+      } else {
+        setState(() {});
+      }
+    });
+  }
 
   void _showAddTaskDialog(DateTime date) {
     showDialog(
@@ -42,7 +67,9 @@ class _ScheduleViewState extends State<ScheduleView> {
           actions: [
             TextButton(
               onPressed: () {
+                print("I am IN");
                 setState(() {
+                  print("I am Little IN");
                   final taskTitle = titleController.text;
                   final taskNote = noteController.text;
                   final taskDateTime = DateTime(
@@ -52,11 +79,23 @@ class _ScheduleViewState extends State<ScheduleView> {
                   );
                   final existingNote = notesMap[taskDateTime];
                   if (existingNote != null && existingNote.isNotEmpty) {
+                    print("I am Deep IN");
+
                     notesMap[taskDateTime] =
                         '$existingNote\n- $taskTitle: $taskNote';
                   } else {
-                    notesMap[taskDateTime] = '- $taskTitle: $taskNote';
+                    print("I am In else");
+                    notesMap[taskDateTime] =
+                        'Title - $taskTitle\nNote - $taskNote';
+                    CalendarDB calendarDB = CalendarDB(
+                      userID: 'samikhan@gmail.com',
+                      Date: DateTime.now(),
+                      Title: titleController.text,
+                      Note: noteController.text,
+                    );
+                    _dbService.addUserNotes(calendarDB);
                   }
+
                   titleController.clear();
                   noteController.clear();
                 });

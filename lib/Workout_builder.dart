@@ -30,9 +30,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     Exercise(name: 'Squats', imageUrl: 'assets/squat.jpg'),
     Exercise(name: 'Plank', imageUrl: 'assets/squat.jpg'),
     Exercise(name: 'Jumping Jacks', imageUrl: 'assets/squat.jpg'),
-    Exercise(name: 'Push-ups', imageUrl: 'assets/squat.jpg'),
-    Exercise(name: 'Squats', imageUrl: 'assets/squat.jpg'),
-
+    Exercise(name: 'Pull Ups', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Crunches', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Pike Pushup', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Rows', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Bicep Curls', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Bench Press', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Wide Pushup', imageUrl: 'assets/squat.jpg'),
+    Exercise(name: 'Sit Ups', imageUrl: 'assets/squat.jpg'),
     // Add more exercises...
   ];
 
@@ -214,7 +219,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       appBar: AppBar(
         title: Text('Exercise Tracker'),
       ),
-      body: Padding(
+      body: Container(
+        color: Color(0xFF1C2757),
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -227,67 +233,73 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               child: Row(
                 children: [
                   Expanded(
+                    flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white, // Set table background color here
                       ),
-                      child: DataTable(
-                        headingRowColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.blue),
-                        columns: [
-                          DataColumn(label: Text('Exercise')),
-                        ],
-                        rows: allExercises.map((exercise) {
-                          return DataRow(
-                            cells: [
-                              DataCell(
-                                InkWell(
-                                  onTap: () {
-                                    _addExerciseWithRepsSets(exercise);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.fitness_center),
-                                      SizedBox(width: 8),
-                                      Text(exercise.name),
-                                    ],
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                        child: DataTable(
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.blue),
+                          columns: [
+                            DataColumn(label: Text('Exercise')),
+                          ],
+                          rows: allExercises.map((exercise) {
+                            return DataRow(
+                              cells: [
+                                DataCell(
+                                  InkWell(
+                                    onTap: () {
+                                      _addExerciseWithRepsSets(exercise);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.fitness_center),
+                                        SizedBox(width: 8),
+                                        Text(exercise.name),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                        // ... (unchanged code for available exercises)
+                              ],
+                            );
+                          }).toList(),
+                        ),
                       ),
-                      // Code for available exercises DataTable remains the same...
                     ),
                   ),
                   SizedBox(width: 16),
                   Expanded(
+                    flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white, // Set table background color here
                       ),
-                      child: DataTable(
-                        headingRowColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.blue),
-                        columns: [
-                          DataColumn(label: Text('Selected Exercises')),
-                        ],
-                        rows: selectedExercises.map((exercise) {
-                          return DataRow(
-                            cells: [
-                              DataCell(
-                                Text(exercise.name),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                        // ... (unchanged code for selected exercises)
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                        child: DataTable(
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.blue),
+                          columns: [
+                            DataColumn(label: Text('Selected Exercises')),
+                          ],
+                          rows: selectedExercises.map((exercise) {
+                            return DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(exercise.name),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
                       ),
-                      // Code for selected exercises DataTable remains the same...
                     ),
                   ),
                 ],
@@ -295,45 +307,48 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             ),
             SizedBox(height: 16),
             Expanded(
-              child: ListView.builder(
-                itemCount: templates.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final template = templates[index];
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    child: ListTile(
-                      title: Text(template.templateName),
-                      subtitle: Text('Day: ${template.dayName}'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.info),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      TemplateDetailScreen(template: template),
-                                ),
-                              );
-
-                              // Handle displaying detailed template information if needed
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              setState(() {
-                                templates.removeAt(index);
-                              });
-                            },
-                          ),
-                        ],
+              flex: 2,
+              child: Container(
+                // ListView builder's container background color
+                color: Colors.white,
+                child: ListView.builder(
+                  itemCount: templates.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final template = templates[index];
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      child: ListTile(
+                        title: Text(template.templateName),
+                        subtitle: Text('Day: ${template.dayName}'),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.info),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TemplateDetailScreen(
+                                        template: template),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {
+                                  templates.removeAt(index);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -354,37 +369,83 @@ class TemplateDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Template Details'),
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          Text(
-            'Template Name: ${template.templateName}',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Day: ${template.dayName}',
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Selected Exercises:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: template.exercises.map((exercise) {
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  '- ${exercise.name}',
-                  style: TextStyle(fontSize: 16),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+      body: Container(
+        color: Color(0xFF1C2757),
+        child: ListView(
+          padding: EdgeInsets.all(16.0),
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 250, // Adjust the height of the image container
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.grey, // Placeholder color
+                      // Replace this Container with your Image.network or Image.asset
+                      child: Image.asset(
+                        'assets/template1.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              // This container holds the details section with a white background
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Template Name: ${template.templateName}',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Day: ${template.dayName}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Selected Exercises:',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: template.exercises.map((exercise) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.0),
+                              child: Text(
+                                '- ${exercise.name}',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

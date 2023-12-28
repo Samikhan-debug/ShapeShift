@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Goal.dart';
+import 'package:flutter_application_1/Shop_Page.dart';
 import 'package:flutter_application_1/new.dart';
 
 import 'package:flutter_application_1/phone.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginForm extends StatefulWidget {
@@ -30,12 +32,12 @@ class _LoginFormState extends State<LoginForm> {
               // Image at the top
               Image.asset(
                 'assets/s6.PNG', // Replace with your image path
-                height: 400,
+                height: 330,
                 width: 300,
                 // You can customize the height and width as needed
               ),
               Container(
-                height: 475,
+                height: 500,
                 width: 325,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -53,14 +55,14 @@ class _LoginFormState extends State<LoginForm> {
                           TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     const Text(
                       'Please Login to Your Account',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                     Container(
                       width: 250,
@@ -115,14 +117,21 @@ class _LoginFormState extends State<LoginForm> {
                       height: 20,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         // Navigate to the RegistrationScreen when the button is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const WhatYourGoalView(),
-                          ),
-                        );
+                        final result = await DatabaseService().loginUser(
+                            emailController.text, passwordController.text);
+                        if (result) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const WhatYourGoalView(),
+                            ),
+                          );
+                        } else {
+                          //do something
+                          debugPrint("could not login");
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -144,7 +153,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the RegistrationScreen when the button is pressed
@@ -159,7 +168,6 @@ class _LoginFormState extends State<LoginForm> {
                           fontSize: 14,
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
@@ -182,14 +190,41 @@ class SignUp extends StatefulWidget {
 }
 
 class _RegistrationScreen extends State<SignUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  var nameController = TextEditingController();
+  var passwordController = TextEditingController();
+  var passwordController1 = TextEditingController();
+  var emailController = TextEditingController();
   String selectedGender = 'Male'; // Set an initial value
   bool agreedToTerms = false;
   DateTime? selectedDate;
+  bool obscureText = true;
+  bool obscureText1 = true;
+
+  bool passwordsMatch() {
+    return passwordController.text == passwordController1.text;
+  }
+
+  String? validatePassword() {
+    if (passwordController.text != passwordController1.text) {
+      return 'Passwords do not match';
+    }
+    return null; // Return null if passwords match
+  }
+
+  bool allEntriesFilled() {
+    return emailController.text.isNotEmpty &&
+        nameController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        passwordController1.text.isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+        body: SingleChildScrollView(
+      child: Form(
+        key: _formKey,
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -199,10 +234,10 @@ class _RegistrationScreen extends State<SignUp> {
             children: [
               //deletef
               SizedBox(
-                height: 30,
+                height: 100,
               ),
               Container(
-                height: 850,
+                height: 650,
                 width: 325,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -226,23 +261,12 @@ class _RegistrationScreen extends State<SignUp> {
                       style: TextStyle(fontSize: 15, color: Colors.grey),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     Container(
                       width: 250,
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Full Name',
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.envelope,
-                            size: 17,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 250,
-                      child: const TextField(
+                      child: TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           labelText: 'Email Address',
                           suffixIcon: Icon(
@@ -254,44 +278,89 @@ class _RegistrationScreen extends State<SignUp> {
                     ),
                     Container(
                       width: 250,
-                      child: const TextField(
+                      child: TextField(
+                        controller: nameController,
                         decoration: InputDecoration(
-                          labelText: 'User-name',
+                          labelText: 'Full Name',
                           suffixIcon: Icon(
-                            FontAwesomeIcons.envelope,
-                            size: 17,
+                            FontAwesomeIcons.person,
+                            size: 20,
                           ),
                         ),
                       ),
                     ),
                     Container(
                       width: 250,
-                      child: const TextField(
+                      child: TextFormField(
+                        controller: passwordController,
                         keyboardType: TextInputType.visiblePassword,
-                        // obscureText: true,
+                        obscureText: obscureText,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.eyeSlash,
-                            size: 17,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            child: Icon(
+                              obscureText
+                                  ? FontAwesomeIcons.eyeSlash
+                                  : FontAwesomeIcons.eye,
+                              size: 17,
+                            ),
                           ),
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter password';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
                       width: 250,
-                      child: const TextField(
+                      child: TextFormField(
+                        controller: passwordController1,
                         keyboardType: TextInputType.visiblePassword,
-                        // obscureText: true,
+                        obscureText: obscureText1,
                         decoration: InputDecoration(
                           labelText: 'Repeat Password',
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.eyeSlash,
-                            size: 17,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                obscureText1 = !obscureText1;
+                              });
+                            },
+                            child: Icon(
+                              obscureText1
+                                  ? FontAwesomeIcons.eyeSlash
+                                  : FontAwesomeIcons.eye,
+                              size: 17,
+                            ),
                           ),
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Repeat password';
+                          } else if (value != passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
                       ),
                     ),
+                    if (passwordController.text.isNotEmpty &&
+                        passwordController1.text.isNotEmpty &&
+                        passwordController.text != passwordController1.text)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'Passwords do not match',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
                     Container(
                       width: 250,
                       child: DropdownButtonFormField<String>(
@@ -320,59 +389,7 @@ class _RegistrationScreen extends State<SignUp> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      width: 250,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          // Show Date Picker and update selectedDate
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                            builder: (BuildContext context, Widget? child) {
-                              return Theme(
-                                data: ThemeData.light().copyWith(
-                                  primaryColor: Color(
-                                      0xFF8A2387), // header background color
-                                  hintColor: Color(0xFFE94057), // text color
-                                  colorScheme: const ColorScheme.light(
-                                    primary:
-                                        Color(0xFF8A2387), // button text color
-                                  ),
-                                  buttonTheme: ButtonThemeData(
-                                      textTheme: ButtonTextTheme.primary),
-                                ),
-                                child: child!,
-                              );
-                            },
-                          );
-
-                          if (pickedDate != null &&
-                              pickedDate != selectedDate) {
-                            setState(() {
-                              selectedDate = pickedDate;
-                            });
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          onPrimary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        child: Text(
-                          selectedDate == null
-                              ? 'Select Date of Birth'
-                              : 'Date of Birth: ${selectedDate!.day}-${selectedDate!.month}-${selectedDate!.year}',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    Padding(padding: EdgeInsets.only(left: 20)),
                     Row(
                       children: [
                         Checkbox(
@@ -389,21 +406,34 @@ class _RegistrationScreen extends State<SignUp> {
                         ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                      ),
+                    SizedBox(
+                      height: 20,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        // Navigate to the RegistrationScreen when the button is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OnboardingScreen(),
-                          ),
-                        );
+                      onTap: () async {
+                        if (_formKey.currentState!.validate() &&
+                            agreedToTerms) {
+                          final result = await DatabaseService().signUpUser(
+                              nameController.text,
+                              emailController.text,
+                              passwordController.text);
+                          // Navigate to the RegistrationScreen when the button is pressed
+                          if (result) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OnboardingScreen(),
+                              ),
+                            );
+                          } else {
+                            //do something
+                            debugPrint("could not login");
+                          }
+                        } else {
+                          // Form is not valid or terms are not agreed upon
+                          debugPrint(
+                              "Form validation failed or terms not agreed upon");
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -441,7 +471,6 @@ class _RegistrationScreen extends State<SignUp> {
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
@@ -453,7 +482,8 @@ class _RegistrationScreen extends State<SignUp> {
                         // Navigate to the RegistrationScreen when the button is pressed
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MyPhone()),
+                          MaterialPageRoute(
+                              builder: (context) => OnboardingScreen()),
                         );
                       },
                       child: Text(
@@ -472,6 +502,6 @@ class _RegistrationScreen extends State<SignUp> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

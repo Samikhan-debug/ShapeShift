@@ -208,7 +208,7 @@ class _ShopPageState extends State<Shop_Page> {
                                 title: 'Camera',
                                 tag: 'camera'),
                             makeCategory10(
-                                image: 'assets/run.jpg',
+                                image: 'assets/50.jpg',
                                 title: 'Workout Builder',
                                 tag: 'builder'),
                             makeCategory11(

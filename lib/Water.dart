@@ -61,7 +61,6 @@ class _WaterAppState extends State<WaterApp> {
     _dbService
         .getUserWaterLevel(userID, today)
         .listen((QuerySnapshot<WaterDB> snapshot) {
-      print(snapshot.docs);
       if (snapshot.docs.isNotEmpty) {
         setState(() {
           int numberOfEntries = snapshot.docs.length;
@@ -80,8 +79,6 @@ class _WaterAppState extends State<WaterApp> {
         });
       }
     });
-    // List<Map<String, dynamic>> waterData = await _dbService.getUserData(userID);
-    // print(waterData);
   }
 
   @override
@@ -89,8 +86,7 @@ class _WaterAppState extends State<WaterApp> {
     return Scaffold(
         body: Center(
       child: Container(
-        color: const Color(0xFF1C2757), // Background color
-
+        color: const Color(0xFF1C2757),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
