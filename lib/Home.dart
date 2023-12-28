@@ -64,7 +64,7 @@ class _ProgramState extends State<Program> {
                   height: 500,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/background.jpg'),
+                          image: AssetImage('assets/46.jpg'),
                           fit: BoxFit.cover)),
                   child: Container(
                     decoration: BoxDecoration(
@@ -80,55 +80,6 @@ class _ProgramState extends State<Program> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 30),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 54,
-                                  height: 54,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(27)),
-                                  alignment: Alignment.center,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Image.asset(
-                                        "assets/1.png",
-                                        width: 50,
-                                        height: 50,
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                const Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text("Code For Any",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700)),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text("Profile",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500))
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(

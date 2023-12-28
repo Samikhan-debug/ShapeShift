@@ -5,6 +5,7 @@ import 'package:flutter_application_1/model/WaterPlan.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
 
 class WaterApp extends StatefulWidget {
   const WaterApp({Key? key}) : super(key: key);

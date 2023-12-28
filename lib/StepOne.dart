@@ -669,45 +669,67 @@ class _Step3ViewState extends State<Step3View> {
               ),
               GestureDetector(
                 onTap: () {
-                  String? gender;
-
-                  if (isMale == true) {
-                    gender = 'Male';
+                  if (selectDate == null ||
+                      selectHeight == null ||
+                      selectWeight == null ||
+                      nameController.text.isEmpty) {
+                    // Display a message if any field is empty
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Missing Information'),
+                          content: Text('Please fill in all fields.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
-                    gender = 'Female';
+                    String? gender;
+                    if (isMale == true) {
+                      gender = 'Male';
+                    } else {
+                      gender = 'Female';
+                    }
+
+                    String weight = selectWeight!;
+                    int? parsedInt;
+                    // Regular expression to match integers in the string
+                    RegExp regExp = RegExp(r'\d+');
+                    // Find the first match in the string
+                    Match? match = regExp.firstMatch(weight);
+
+                    if (match != null) {
+                      // Extract the matched substring (containing only integers)
+                      String result = match.group(0)!;
+                      parsedInt = int.parse(result);
+                      print(parsedInt); // Output: 43
+                    }
+
+                    UserModelDB userInfoDB = UserModelDB(
+                      userID: userID,
+                      name: nameController.text,
+                      height: int.parse(selectHeight!),
+                      weight: parsedInt!,
+                      gender: gender,
+                    );
+                    _databaseService.addUserInfo(userInfoDB);
+
+                    // Navigate to the RegistrationScreen when the button is pressed
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Shop_Page(),
+                      ),
+                    );
                   }
-
-                  String weight = selectWeight!;
-                  int? parsedInt;
-                  // Regular expression to match integers in the string
-                  RegExp regExp = RegExp(r'\d+');
-
-                  // Find the first match in the string
-                  Match? match = regExp.firstMatch(weight);
-
-                  if (match != null) {
-                    // Extract the matched substring (containing only integers)
-                    String result = match.group(0)!;
-                    parsedInt = int.parse(result);
-
-                    print(parsedInt); // Output: 43
-                  }
-                  UserModelDB userInfoDB = UserModelDB(
-                    userID: userID,
-                    name: nameController.text,
-                    height: int.parse(selectHeight!),
-                    weight: parsedInt!,
-                    gender: gender,
-                  );
-                  _databaseService.addUserInfo(userInfoDB);
-
-                  // Navigate to the RegistrationScreen when the button is pressed
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Shop_Page(),
-                    ),
-                  );
                 },
                 child: Container(
                   alignment: Alignment.center,

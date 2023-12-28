@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Goal.dart';
 import 'package:flutter_application_1/Shop_Page.dart';
+import 'package:flutter_application_1/homescreen.dart';
 import 'package:flutter_application_1/new.dart';
 import 'package:flutter_application_1/signUp.dart';
 import 'services/DatabaseService.dart';
@@ -123,9 +124,10 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        // Navigate to the RegistrationScreen when the button is pressed
                         _user = await DatabaseService().loginUser(
-                            emailController.text, passwordController.text);
+                          emailController.text,
+                          passwordController.text,
+                        );
                         if (_user != null) {
                           userID = emailController.text;
                           Navigator.push(
@@ -135,8 +137,25 @@ class _LoginFormState extends State<LoginForm> {
                             ),
                           );
                         } else {
-                          //do something
-                          debugPrint("could not login");
+                          // Show a dialog for incorrect password
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Incorrect Password'),
+                                content: Text(
+                                    'Please check your email and password.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       },
                       child: Container(

@@ -92,7 +92,15 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            // Navigate to your desired screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Shop_Page()), // Replace YourScreen with your desired screen
+            );
+          },
           icon: const Icon(Ionicons.chevron_back_outline),
         ),
         leadingWidth: 80,
@@ -112,62 +120,104 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 40),
               const Text(
-                "Account",
+                "Personal Information",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Image.asset("assets/avatar.png", width: 70, height: 70),
-                    const SizedBox(width: 20),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Uranus Code",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Name:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          "Youtube Channel",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    ForwardButton(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditAccountScreen(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "Gender:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "$name",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "$gender",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Height:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "Weight:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "$height",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "$weight",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 40),
-              const Text(
-                "Settings",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20),
+
               SettingItem(
                 title: "Language",
                 icon: Ionicons.earth,
@@ -198,195 +248,52 @@ class _AccountScreenState extends State<AccountScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              SettingItem(
-                title: "Help",
-                icon: Ionicons.nuclear,
-                bgColor: Colors.red.shade100,
-                iconColor: Colors.red,
-                onTap: () {},
+              SizedBox(
+                height: 40,
+              ),
+              // ... your other widgets
+              // Your logout button wrapped in a Center widget
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigate to the logout screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginForm(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.blue,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Text(
+                        'Log Out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
-              Text("Name is: $name\n"),
-              Text("Name is: $height\n"),
-              Text("Name is: $weight\n"),
-              Text("Name is: $gender\n"),
+              //      Text("Name is: $name\n"),
+              //    Text("Name is: $height\n"),
+              //      Text("Name is: $weight\n"),
+              //     Text("Name is: $gender\n"),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class EditAccountScreen extends StatefulWidget {
-  const EditAccountScreen({super.key});
-
-  @override
-  State<EditAccountScreen> createState() => _EditAccountScreenState();
-}
-
-class _EditAccountScreenState extends State<EditAccountScreen> {
-  String gender = "man";
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Ionicons.chevron_back_outline),
-        ),
-        leadingWidth: 80,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {},
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.lightBlueAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                fixedSize: Size(60, 50),
-                elevation: 3,
-              ),
-              icon: Icon(Ionicons.checkmark, color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Account",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 40),
-              EditItem(
-                title: "Photo",
-                widget: Column(
-                  children: [
-                    Image.asset(
-                      "assets/avatar.png",
-                      height: 100,
-                      width: 100,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.lightBlueAccent,
-                      ),
-                      child: const Text("Upload Image"),
-                    )
-                  ],
-                ),
-              ),
-              const EditItem(
-                title: "Name",
-                widget: TextField(),
-              ),
-              const SizedBox(height: 40),
-              EditItem(
-                title: "Gender",
-                widget: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          gender = "man";
-                        });
-                      },
-                      style: IconButton.styleFrom(
-                        backgroundColor: gender == "man"
-                            ? Colors.deepPurple
-                            : Colors.grey.shade200,
-                        fixedSize: const Size(50, 50),
-                      ),
-                      icon: Icon(
-                        Ionicons.male,
-                        color: gender == "man" ? Colors.white : Colors.black,
-                        size: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          gender = "woman";
-                        });
-                      },
-                      style: IconButton.styleFrom(
-                        backgroundColor: gender == "woman"
-                            ? Colors.deepPurple
-                            : Colors.grey.shade200,
-                        fixedSize: const Size(50, 50),
-                      ),
-                      icon: Icon(
-                        Ionicons.female,
-                        color: gender == "woman" ? Colors.white : Colors.black,
-                        size: 18,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              const EditItem(
-                widget: TextField(),
-                title: "Age",
-              ),
-              const SizedBox(height: 40),
-              const EditItem(
-                widget: TextField(),
-                title: "Email",
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class EditItem extends StatelessWidget {
-  final Widget widget;
-  final String title;
-  const EditItem({
-    super.key,
-    required this.widget,
-    required this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        const SizedBox(width: 40),
-        Expanded(
-          flex: 5,
-          child: widget,
-        )
-      ],
     );
   }
 }
@@ -410,6 +317,34 @@ class ForwardButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: const Icon(Ionicons.chevron_forward_outline),
+      ),
+    );
+  }
+}
+
+class YourCustomBoxWidget extends StatelessWidget {
+  final String value;
+
+  const YourCustomBoxWidget({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      height: 60,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius:
+            BorderRadius.circular(12), // Adjust border radius as needed
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        value,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }

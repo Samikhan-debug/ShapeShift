@@ -1,5 +1,7 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Settings.dart';
 import 'package:flutter_application_1/Shop_Page.dart';
 import 'package:flutter_application_1/bingo.dart';
 import 'package:flutter_application_1/challenge.dart';
@@ -10,6 +12,48 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.blue,
+          color: const Color(0xFF1C2757),
+          animationDuration: const Duration(milliseconds: 300),
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Shop_Page()),
+                );
+                break;
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GameScreen()),
+                );
+                break;
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AccountScreen()),
+                );
+                break;
+            }
+          },
+          items: const [
+            Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.favorite,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+          ],
+        ),
         backgroundColor: const Color(0xFF1C2757),
         body: ListView(children: [
           Container(

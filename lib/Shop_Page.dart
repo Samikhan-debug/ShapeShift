@@ -16,8 +16,13 @@ import 'package:flutter_application_1/Workout_builder.dart';
 import 'package:flutter_application_1/alarm.dart';
 import 'package:flutter_application_1/counter.dart';
 import 'package:flutter_application_1/game.dart';
+import 'package:flutter_application_1/homescreen.dart';
+import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/model/UserModel.dart';
 
 import 'package:flutter_application_1/schedule.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
+import 'package:flutter_application_1/workoutscreen.dart';
 
 class Shop_Page extends StatefulWidget {
   const Shop_Page({super.key});
@@ -34,6 +39,36 @@ class _ShopPageState extends State<Shop_Page> {
     // Add your image paths here
   ];
 
+  String? name, gender;
+  int? height, weight;
+
+  DatabaseService _databaseService = DatabaseService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchUserInfo();
+    super.initState();
+  }
+
+  void fetchUserInfo() {
+    _databaseService.getUserInfo(userID).listen((snapshot) {
+      setState(() {
+        for (var doc in snapshot.docs) {
+          UserModelDB userModelDB = doc.data();
+
+          // Assign retrieved data to your variables
+          setState(() {
+            name = userModelDB.name;
+            gender = userModelDB.gender;
+            weight = userModelDB.weight;
+            height = userModelDB.height;
+          });
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +81,13 @@ class _ShopPageState extends State<Shop_Page> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Program()),
+                MaterialPageRoute(builder: (context) => Shop_Page()),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Shop_Page()),
+                MaterialPageRoute(builder: (context) => GameScreen()),
               );
               break;
             case 2:
@@ -81,6 +116,39 @@ class _ShopPageState extends State<Shop_Page> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+              width: double.infinity,
+              color: Color(0xFF1C2757),
+              child: Text.rich(
+                TextSpan(
+                  text: 'Welcome back, ',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '$name!',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        color:
+                            Colors.blue, // Change the color for the name here
+                      ),
+                    ),
+                    TextSpan(
+                      text: '\nTime to level up your fitness game!',
+                      style: TextStyle(
+                        fontSize: 19.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             const SizedBox(
               height: 30,
             ),
@@ -165,14 +233,18 @@ class _ShopPageState extends State<Shop_Page> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            makeCategory(
-                                image: 'assets/10.png',
-                                title: 'Home',
-                                tag: 'home'),
                             makeCategory1(
                                 image: 'assets/11.png',
                                 title: 'BMI Calculator',
                                 tag: 'bmi'),
+                            makeCategory12(
+                                image: 'assets/44.png',
+                                title: 'Calories Checker',
+                                tag: 'cc'),
+                            makeCategory13(
+                                image: 'assets/45.jpg',
+                                title: 'Workout Checker',
+                                tag: 'wc'),
                           ],
                         ),
                       ),
@@ -301,49 +373,6 @@ class _ShopPageState extends State<Shop_Page> {
                   ),
                 ))
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget makeCategory({image, title, tag}) {
-    return AspectRatio(
-      aspectRatio: 2 / 2.2,
-      child: Hero(
-        tag: tag,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Program()));
-          },
-          child: Material(
-            child: Container(
-              margin: const EdgeInsets.only(right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      image: AssetImage(image), fit: BoxFit.cover)),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient:
-                        LinearGradient(begin: Alignment.bottomRight, colors: [
-                      Colors.black.withOpacity(.8),
-                      Colors.black.withOpacity(.0),
-                    ])),
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    )),
-              ),
-            ),
-          ),
         ),
       ),
     );
@@ -847,6 +876,92 @@ class _ShopPageState extends State<Shop_Page> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 13),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory12({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          },
+          child: Material(
+            child: Container(
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory13({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Workoutscreen()));
+          },
+          child: Material(
+            child: Container(
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     )),
               ),
             ),

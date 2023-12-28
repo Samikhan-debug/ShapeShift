@@ -212,7 +212,7 @@ class _RegistrationScreen extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Row(
@@ -232,7 +232,7 @@ class _RegistrationScreen extends State<SignUp> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     GestureDetector(
                       onTap: () async {
@@ -299,27 +299,6 @@ class _RegistrationScreen extends State<SignUp> {
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to the RegistrationScreen when the button is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OnboardingScreen()),
-                        );
-                      },
-                      child: Text(
-                        "Don't have an account? Make one!!",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),

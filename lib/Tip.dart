@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Shop_Page.dart';
+import 'package:ionicons/ionicons.dart';
 
 class FAQScreen extends StatelessWidget {
   final List<FAQItem> faqItems = [
