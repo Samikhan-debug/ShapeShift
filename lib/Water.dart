@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_form.dart';
 import 'package:flutter_application_1/model/WaterPlan.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -35,7 +36,7 @@ class _WaterAppState extends State<WaterApp> {
         filledTimes.add(DateTime.now());
 
         WaterDB waterData = WaterDB(
-          userID: 'samikhan@gmail.com',
+          userID: userID,
           isClicked: true,
           Date: DateTime.now(),
         );
@@ -49,17 +50,17 @@ class _WaterAppState extends State<WaterApp> {
       filledGlasses = 0;
       percentage = 0.0;
       filledTimes.clear();
-      _dbService.deleteAllUserRecords("samikhan@gmail.com");
+      _dbService.deleteAllUserRecords(userID);
       print("User Info Deleted");
     });
   }
 
   Future<void> fetchData() async {
     DateTime today = DateTime.now();
-    String userID = 'samikhan@gmail.com';
+    String usersID = userID;
 
     _dbService
-        .getUserWaterLevel(userID, today)
+        .getUserWaterLevel(usersID, today)
         .listen((QuerySnapshot<WaterDB> snapshot) {
       if (snapshot.docs.isNotEmpty) {
         setState(() {

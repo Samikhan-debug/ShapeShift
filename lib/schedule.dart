@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_form.dart';
 import 'package:flutter_application_1/model/Calendar.dart';
 import 'package:flutter_application_1/model/WaterPlan.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
@@ -24,20 +25,21 @@ class _ScheduleViewState extends State<ScheduleView> {
   @override
   void initState() {
     super.initState();
+
+    fetchNotesForDate(DateTime.now());
   }
 
-  Future<void> fetchData() async {
-    DateTime today = DateTime.now();
-    String userID = 'samikhan@gmail.com';
+  void fetchNotesForDate(DateTime date) {
+    _dbService.getUserNotes(userID, date).listen((snapshot) {
+      setState(() {
+        notesMap.clear();
 
-    _dbService
-        .getUserNotes(userID, today)
-        .listen((QuerySnapshot<CalendarDB> snapshot) {
-      if (snapshot.docs.isNotEmpty) {
-        setState(() {});
-      } else {
-        setState(() {});
-      }
+        for (var doc in snapshot.docs) {
+          CalendarDB calendarDB = doc.data();
+          notesMap[calendarDB.Date] =
+              'Title - ${calendarDB.Title}\nNote - ${calendarDB.Note}';
+        }
+      });
     });
   }
 
@@ -88,7 +90,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                     notesMap[taskDateTime] =
                         'Title - $taskTitle\nNote - $taskNote';
                     CalendarDB calendarDB = CalendarDB(
-                      userID: 'samikhan@gmail.com',
+                      userID: '$userID',
                       Date: DateTime.now(),
                       Title: titleController.text,
                       Note: noteController.text,
@@ -194,6 +196,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                         targetDate = date;
                         noteController.text = notesMap[date] ?? '';
                       });
+                      fetchNotesForDate(date);
                     },
                     selectedDayTextStyle: const TextStyle(
                       color: Colors.white,
@@ -231,7 +234,10 @@ class _ScheduleViewState extends State<ScheduleView> {
                       bool isThisMonthDay,
                       DateTime day,
                     ) {
-                      if (notesMap.containsKey(day)) {
+                      // Check if notesMap contains the day and fetch the note for that day
+                      final noteForDay = notesMap[day];
+
+                      if (noteForDay != null) {
                         return Container(
                           width: 35,
                           height: 35,
@@ -240,13 +246,23 @@ class _ScheduleViewState extends State<ScheduleView> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           alignment: Alignment.center,
-                          child: Text(
-                            day.day.toString(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                targetDate =
+                                    day; // Update the targetDate to the tapped day
+                                noteController.text =
+                                    noteForDay; // Show note for the tapped day
+                              });
+                            },
+                            child: Text(
+                              day.day.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         );

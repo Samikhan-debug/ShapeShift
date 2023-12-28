@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/model/Alarm.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -12,6 +16,7 @@ class Alarm extends StatefulWidget {
 }
 
 class _AlarmState extends State<Alarm> {
+  DatabaseService _databaseService = DatabaseService();
   DateTime now = DateTime.now();
   Timer? _everySec;
   List<AlarmItem> alarms = []; // Store alarms in a list for display
@@ -23,7 +28,7 @@ class _AlarmState extends State<Alarm> {
 
   @override
   void initState() {
-    super.initState();
+    fetchAlarmsFromFirestore(DateTime.now());
 
     _everySec = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -32,34 +37,84 @@ class _AlarmState extends State<Alarm> {
     });
 
     // Sample data for alarms (remove this if not needed)
+    super.initState();
+  }
+
+  Future<void> fetchAlarmsFromFirestore(DateTime date) async {
+    _databaseService.getUserAlarms(userID, date).listen((snapshot) {
+      print(snapshot);
+      // setState(() {
+
+      //   for (var doc in snapshot.docs) {
+      //     CalendarDB calendarDB = doc.data();
+      //     notesMap[calendarDB.Date] =
+      //         'Title - ${calendarDB.Title}\nNote - ${calendarDB.Note}';
+      //   }
+      // });
+    });
   }
 
   void _addAlarm() async {
+    TimeOfDay? selectedTime;
+    DateTime? selectDay;
     // Show dialog to set alarm day and time
-    TimeOfDay? selectedTime = await showTimePicker(
+    selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
 
     if (selectedTime != null) {
-      DateTime? selectedDay = await showDatePicker(
+      selectDay = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(Duration(days: 365)),
       );
 
-      if (selectedDay != null) {
+      if (selectDay != null) {
         // Add the selected alarm day and time to the list
         setState(() {
           final formattedDay = DateFormat('d MMMM, EEEE')
-              .format(selectedDay); // Updated date format
+              .format(selectDay!); // Updated date format
           alarms.add(
-            AlarmItem(time: selectedTime, day: formattedDay, isActive: true),
+            AlarmItem(time: selectedTime!, day: formattedDay, isActive: true),
           );
         });
       }
     }
+
+    print(selectedTime);
+    print(selectDay);
+
+    String time = getTimeIn12HourFormat(selectedTime!);
+    DateTime selectedDay = selectDay!;
+
+    DateFormat timeFormat = DateFormat('hh:mm a');
+    DateTime parsedTime = timeFormat.parse(time);
+
+    DateTime finalTimeDate = DateTime(
+      selectedDay.year,
+      selectedDay.month,
+      selectedDay.day,
+      parsedTime.hour,
+      parsedTime.minute,
+    );
+
+    print(finalTimeDate);
+
+    AlarmDB alarmDB = AlarmDB(
+      userID: userID,
+      alarmTimeDate: finalTimeDate,
+    );
+    _databaseService.addUserAlarms(alarmDB);
+  }
+
+  String getTimeIn12HourFormat(TimeOfDay selectedTime) {
+    final hour = selectedTime.hourOfPeriod;
+    final minute = selectedTime.minute.toString().padLeft(2, '0');
+    final period = selectedTime.period == DayPeriod.am ? 'AM' : 'PM';
+
+    return '$hour:$minute $period';
   }
 
   @override
@@ -76,7 +131,6 @@ class _AlarmState extends State<Alarm> {
               TimerBuilder.periodic(
                 Duration(seconds: 1),
                 builder: (context) {
-                  //getting the time
                   String second = DateTime.now().second < 10
                       ? "0${DateTime.now().second}"
                       : DateTime.now().second.toString();
@@ -93,15 +147,13 @@ class _AlarmState extends State<Alarm> {
                         children: [
                           Text(
                             "Today",
-                            style: AppStyle.mainTextThin.copyWith(
-                                color: Colors
-                                    .white), // Adjusting text color to blue
+                            style: AppStyle.mainTextThin
+                                .copyWith(color: Colors.white),
                           ),
                           Text(
                             "$hour:$minute",
-                            style: AppStyle.maintext.copyWith(
-                                color: Colors
-                                    .white), // Adjusting text color to blue
+                            style:
+                                AppStyle.maintext.copyWith(color: Colors.white),
                           ),
                         ],
                       ),
@@ -128,7 +180,7 @@ class _AlarmState extends State<Alarm> {
                         children: [
                           Expanded(
                             child: Text(
-                              '${alarm.day} ${alarm.time.format(context)}', // Show day and time
+                              '${alarm.day} ${alarm.time.format(context)}',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -143,8 +195,6 @@ class _AlarmState extends State<Alarm> {
                                 alarms[index].isActive = value;
                               });
                             },
-
-                            // Adjusting switch color to white
                           ),
                           IconButton(
                             icon: Icon(Icons.delete, color: Colors.white),
@@ -174,7 +224,7 @@ class _AlarmState extends State<Alarm> {
 
 class AlarmItem {
   final TimeOfDay time;
-  final String day; // Add day to the AlarmItem
+  final String day;
   bool isActive;
 
   AlarmItem({required this.time, required this.day, this.isActive = false});
@@ -231,8 +281,6 @@ class _ClockViewState extends State<ClockView> {
     );
   }
 }
-
-// creating the Clock Painter Class
 
 class ClockPainter extends CustomPainter {
   int? seconds;

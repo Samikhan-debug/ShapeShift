@@ -1,38 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel {
-  String userID, email, name;
+class UserModelDB {
+  String userID, name, gender;
+  int weight, height;
 
-  UserModel({
+  UserModelDB({
     required this.userID,
-    required this.email,
     required this.name,
+    required this.weight,
+    required this.height,
+    required this.gender,
   });
 
-  UserModel.fromJson(Map<String, Object?> json)
+  UserModelDB.fromJson(Map<String, Object?> json)
       : this(
           userID: json['userID']! as String,
-          email: json['email']! as String,
           name: json['name']! as String,
+          gender: json['gender']! as String,
+          weight: json['weight']! as int,
+          height: json['height']! as int,
         );
 
-  UserModel copyWith({
+  UserModelDB copyWith({
     String? userID,
-    String? email,
+    String? gender,
     String? name,
+    int? weight,
+    int? height,
   }) {
-    return UserModel(
+    return UserModelDB(
       userID: userID ?? this.userID,
-      email: email ?? this.email,
       name: name ?? this.name,
+      gender: gender ?? this.gender,
+      weight: weight ?? this.weight,
+      height: height ?? this.height,
     );
   }
 
   Map<String, Object?> toJson() {
     return {
       'userID': userID,
-      'email': email,
       'name': name,
+      'gender': gender,
+      'weight': weight,
+      'height': height,
     };
   }
 }

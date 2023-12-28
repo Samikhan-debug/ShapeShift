@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Shop_Page.dart';
+import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/model/UserModel.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
+import 'package:flutter_application_1/signUp.dart';
 
 import 'package:intl/intl.dart';
 
@@ -335,6 +340,7 @@ class Step3View extends StatefulWidget {
 }
 
 class _Step3ViewState extends State<Step3View> {
+  DatabaseService _databaseService = DatabaseService();
   DateTime? selectDate;
   String? selectHeight;
   String? selectWeight;
@@ -663,6 +669,38 @@ class _Step3ViewState extends State<Step3View> {
               ),
               GestureDetector(
                 onTap: () {
+                  String? gender;
+
+                  if (isMale == true) {
+                    gender = 'Male';
+                  } else {
+                    gender = 'Female';
+                  }
+
+                  String weight = selectWeight!;
+                  int? parsedInt;
+                  // Regular expression to match integers in the string
+                  RegExp regExp = RegExp(r'\d+');
+
+                  // Find the first match in the string
+                  Match? match = regExp.firstMatch(weight);
+
+                  if (match != null) {
+                    // Extract the matched substring (containing only integers)
+                    String result = match.group(0)!;
+                    parsedInt = int.parse(result);
+
+                    print(parsedInt); // Output: 43
+                  }
+                  UserModelDB userInfoDB = UserModelDB(
+                    userID: userID,
+                    name: nameController.text,
+                    height: int.parse(selectHeight!),
+                    weight: parsedInt!,
+                    gender: gender,
+                  );
+                  _databaseService.addUserInfo(userInfoDB);
+
                   // Navigate to the RegistrationScreen when the button is pressed
                   Navigator.push(
                     context,

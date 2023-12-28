@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/Shop_Page.dart';
+import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/model/UserModel.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -14,6 +17,34 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   bool isDarkMode = false;
+  String? name, gender;
+  int? height, weight;
+  DatabaseService _databaseService = DatabaseService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchUserInfo();
+    super.initState();
+  }
+
+  void fetchUserInfo() {
+    _databaseService.getUserInfo(userID).listen((snapshot) {
+      setState(() {
+        for (var doc in snapshot.docs) {
+          UserModelDB userModelDB = doc.data();
+
+          // Assign retrieved data to your variables
+          setState(() {
+            name = userModelDB.name;
+            gender = userModelDB.gender;
+            weight = userModelDB.weight;
+            height = userModelDB.height;
+          });
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +205,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 iconColor: Colors.red,
                 onTap: () {},
               ),
+              const SizedBox(height: 20),
+              Text("Name is: $name\n"),
+              Text("Name is: $height\n"),
+              Text("Name is: $weight\n"),
+              Text("Name is: $gender\n"),
             ],
           ),
         ),
