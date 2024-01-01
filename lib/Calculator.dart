@@ -115,37 +115,101 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                     fontSize: 24,
                     fontWeight: FontWeight.w400),
               ),
-              Container(
-                // Wrap the Slider in a Column to make it vertical
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: 3,
-                      child: Slider(
-                        min: 80.0,
-                        max: 250.0,
-                        onChanged: (height) {
-                          setState(() {
-                            _heightOfUser = height;
-                          });
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Slider(
+                          min: 80.0,
+                          max: 250.0,
+                          onChanged: (height) {
+                            setState(() {
+                              _heightOfUser = height;
+                            });
+                          },
+                          value: _heightOfUser,
+                          divisions: 170,
+                          activeColor: Colors.blue,
+                          label: "$_heightOfUser",
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          double feet = 0.0;
+                          double inches = 0.0;
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Convert Height to cm'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: 'Feet',
+                                      ),
+                                      onChanged: (value) {
+                                        feet = double.tryParse(value) ?? 0.0;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: 'Inches',
+                                      ),
+                                      onChanged: (value) {
+                                        inches = double.tryParse(value) ?? 0.0;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Convert'),
+                                    onPressed: () {
+                                      // Perform the conversion logic
+                                      double totalInches = feet * 12 + inches;
+                                      double cmHeight = totalInches * 2.54;
+
+                                      // Show the converted height in centimeters
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title:
+                                                Text('Converted Height to cm'),
+                                            content:
+                                                Text('Height: $cmHeight cm'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
-                        value: _heightOfUser,
-                        divisions: 170,
-                        activeColor: Colors.blue,
-                        label: "$_heightOfUser",
+                        child: Text('Converter'),
                       ),
-                    ),
-                    Text(
-                      "$_heightOfUser cm",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
               SizedBox(
                 height: 24,
@@ -264,7 +328,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

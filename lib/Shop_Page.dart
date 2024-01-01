@@ -22,6 +22,7 @@ import 'package:flutter_application_1/model/UserModel.dart';
 
 import 'package:flutter_application_1/schedule.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
+import 'package:flutter_application_1/workout/workoutprogress.dart';
 import 'package:flutter_application_1/workoutscreen.dart';
 
 class Shop_Page extends StatefulWidget {
@@ -245,6 +246,10 @@ class _ShopPageState extends State<Shop_Page> {
                                 image: 'assets/45.jpg',
                                 title: 'Workout Checker',
                                 tag: 'wc'),
+                            makeCategory14(
+                                image: 'assets/45.jpg',
+                                title: 'Workout Programs',
+                                tag: 'wc1'),
                           ],
                         ),
                       ),
@@ -962,6 +967,49 @@ class _ShopPageState extends State<Shop_Page> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget makeCategory14({image, title, tag}) {
+    return AspectRatio(
+      aspectRatio: 2 / 2.2,
+      child: Hero(
+        tag: tag,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Workoutscreen1()));
+          },
+          child: Material(
+            child: Container(
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(image), fit: BoxFit.cover)),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient:
+                        LinearGradient(begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.0),
+                    ])),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13),
                     )),
               ),
             ),

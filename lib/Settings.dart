@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Shop_Page.dart';
 import 'package:flutter_application_1/login_form.dart';
 import 'package:flutter_application_1/model/UserModel.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
+
 import 'package:ionicons/ionicons.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -118,7 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               const Text(
                 "Personal Information",
                 style: TextStyle(
@@ -126,97 +127,83 @@ class _AccountScreenState extends State<AccountScreen> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Name:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "Gender:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.asset(
+                      "assets/75.jpg",
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "$name",
-                        style: TextStyle(
-                          fontSize: 20,
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "$name",
+                          style: TextStyle(
+                            color: TColor.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "$gender",
-                        style: TextStyle(
-                          fontSize: 20,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
+                        Text(
+                          "Unleash Your Slim Potential: Where Fitness Meets Fabulous!",
+                          style: TextStyle(
+                            color: TColor.gray,
+                            fontSize: 15,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 30),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Height:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "Weight:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  Expanded(
+                    child: TitleSubtitleCell(
+                      title: height
+                          .toString(), // Ensure height is treated as a string
+                      subtitle: "Height",
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "$height",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "$weight",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: TitleSubtitleCell(
+                      title: weight
+                          .toString(), // Ensure weight is treated as a string
+                      subtitle: "Weight",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: TitleSubtitleCell(
+                      title: gender
+                          .toString(), // Ensure gender is treated as a string
+                      subtitle: "Gender",
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+
+              const SizedBox(height: 50),
 
               SettingItem(
                 title: "Language",
@@ -466,6 +453,69 @@ class SettingSwitch extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           CupertinoSwitch(value: value, onChanged: onTap),
+        ],
+      ),
+    );
+  }
+}
+
+class TColor {
+  static Color get primaryColor1 => const Color(0xff92A3FD);
+  static Color get primaryColor2 => const Color(0xff9DCEFF);
+
+  static Color get secondaryColor1 => const Color(0xffC58BF2);
+  static Color get secondaryColor2 => const Color(0xffEEA4CE);
+
+  static List<Color> get primaryG => [primaryColor2, primaryColor1];
+  static List<Color> get secondaryG => [secondaryColor2, secondaryColor1];
+
+  static Color get black => const Color(0xff1D1617);
+  static Color get gray => const Color(0xff786F72);
+  static Color get white => Colors.white;
+  static Color get lightGray => const Color(0xffF7F8F8);
+}
+
+class TitleSubtitleCell extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  const TitleSubtitleCell(
+      {super.key, required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      decoration: BoxDecoration(
+          color: TColor.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 2)]),
+      child: Column(
+        children: [
+          ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (bounds) {
+              return LinearGradient(
+                      colors: TColor.primaryG,
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight)
+                  .createShader(
+                      Rect.fromLTRB(0, 0, bounds.width, bounds.height));
+            },
+            child: Text(
+              title,
+              style: TextStyle(
+                  color: TColor.white.withOpacity(0.7),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16),
+            ),
+          ),
+          Text(
+            subtitle,
+            style: TextStyle(
+              color: TColor.gray,
+              fontSize: 14,
+            ),
+          ),
         ],
       ),
     );

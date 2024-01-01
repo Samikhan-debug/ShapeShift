@@ -62,7 +62,7 @@ class _RegistrationScreen extends State<SignUp> {
                 height: 100,
               ),
               Container(
-                height: 650,
+                height: 700,
                 width: 325,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -90,7 +90,7 @@ class _RegistrationScreen extends State<SignUp> {
                     ),
                     Container(
                       width: 250,
-                      child: TextField(
+                      child: TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
                           labelText: 'Email Address',
@@ -99,12 +99,23 @@ class _RegistrationScreen extends State<SignUp> {
                             size: 17,
                           ),
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter email address';
+                          } else if (!RegExp(
+                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
+                            return 'Enter a valid email address';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
                       width: 250,
-                      child: TextField(
+                      child: TextFormField(
                         controller: nameController,
+                        maxLength: 15, // Set maximum length to 15 characters
                         decoration: InputDecoration(
                           labelText: 'Full Name',
                           suffixIcon: Icon(
@@ -112,6 +123,14 @@ class _RegistrationScreen extends State<SignUp> {
                             size: 20,
                           ),
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter full name';
+                          } else if (value.length > 20) {
+                            return 'Name cannot exceed 20 characters';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     Container(
@@ -139,6 +158,8 @@ class _RegistrationScreen extends State<SignUp> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter password';
+                          } else if (value.length < 4) {
+                            return 'More than 4 letters';
                           }
                           return null;
                         },
@@ -244,23 +265,36 @@ class _RegistrationScreen extends State<SignUp> {
                           print("Button clicked");
                           if (_user != null) {
                             userID = emailController.text;
-                            print("User succesfully signed Up");
+                            print("User successfully signed Up");
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OnboardingScreen(),
-                                ));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OnboardingScreen(),
+                              ),
+                            );
                           }
                         } else {
-                          print("Error Occured");
-
-                          debugPrint("could not login");
-                          //  }
-                          // } else {
-                          //   // Form is not valid or terms are not agreed upon
-                          //   debugPrint(
-                          //       "Form validation failed or terms not agreed upon");
-                          // }
+                          // If the form is not valid or terms are not agreed upon
+                          if (!allEntriesFilled()) {
+                            // Show a dialog if not all fields are filled
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Fill out all values'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                            context); // Close the dialog
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         }
                       },
                       child: Container(
