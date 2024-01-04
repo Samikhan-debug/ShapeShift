@@ -4,6 +4,8 @@ import 'package:flutter_application_1/Settings.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 
 import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/phone_auth.dart';
+import 'package:flutter_application_1/splash.dart';
 
 import 'package:flutter_application_1/workout/workout_detail.dart';
 import 'package:flutter_application_1/workout/workoutprogress.dart';
@@ -25,6 +27,6 @@ class MyApp extends StatelessWidget {
         title: 'Login Form',
         theme: ThemeData(primaryColor: Colors.blue),
         debugShowCheckedModeBanner: false,
-        home: LoginForm());
+        home: InitialAnimationScreen());
   }
 }

@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Shop_Page.dart';
 import 'package:flutter_application_1/login_form.dart';
-import 'package:flutter_application_1/new.dart';
+import 'package:flutter_application_1/phone_auth.dart';
+import 'package:flutter_application_1/splash.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'services/DatabaseService.dart';
 
@@ -42,6 +45,15 @@ class _RegistrationScreen extends State<SignUp> {
         nameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
         passwordController1.text.isNotEmpty;
+  }
+
+  String? validatePassword1() {
+    if (passwordController.text.length < 6) {
+      return 'Password should be at least 6 characters long';
+    } else if (passwordController.text != passwordController1.text) {
+      return 'Passwords do not match';
+    }
+    return null; // Return null if passwords match and meet the length criteria
   }
 
   @override
@@ -115,7 +127,7 @@ class _RegistrationScreen extends State<SignUp> {
                       width: 250,
                       child: TextFormField(
                         controller: nameController,
-                        maxLength: 15, // Set maximum length to 15 characters
+                        maxLength: 20, // Set maximum length to 15 characters
                         decoration: InputDecoration(
                           labelText: 'Full Name',
                           suffixIcon: Icon(
@@ -158,8 +170,8 @@ class _RegistrationScreen extends State<SignUp> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter password';
-                          } else if (value.length < 4) {
-                            return 'More than 4 letters';
+                          } else if (value.length < 6) {
+                            return 'Password should be at least 6 characters long';
                           }
                           return null;
                         },
@@ -269,7 +281,7 @@ class _RegistrationScreen extends State<SignUp> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => OnboardingScreen(),
+                                builder: (context) => InitialAnimationScreen1(),
                               ),
                             );
                           }
