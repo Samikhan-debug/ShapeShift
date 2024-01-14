@@ -98,7 +98,7 @@ class _InitialAnimationScreenState1 extends State<InitialAnimationScreen1> {
               width: 300, // Set width of the container
               height: 400, // Set height of the container
               child: Lottie.asset(
-                'assets/splash4.json', // Replace with your animation JSON file path
+                'assets/splash8.json', // Replace with your animation JSON file path
                 width: double.infinity, // Occupy the available width
                 height: double.infinity, // Occupy the available height
                 fit: BoxFit.cover, // Adjust the fit as needed

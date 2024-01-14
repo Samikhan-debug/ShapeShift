@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Forgot.dart';
 import 'package:flutter_application_1/Goal.dart';
 import 'package:flutter_application_1/Shop_Page.dart';
 import 'package:flutter_application_1/homescreen.dart';
 import 'package:flutter_application_1/new.dart';
 import 'package:flutter_application_1/signUp.dart';
 import 'services/DatabaseService.dart';
-import 'package:flutter_application_1/phone.dart';
+
 import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -109,17 +110,27 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 40, 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Forget Password',
-                            style: TextStyle(color: Colors.blue),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navigate to the next screen here
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPassword()),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Forgot Password',
+                              style: TextStyle(color: Colors.blue),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
                     GestureDetector(

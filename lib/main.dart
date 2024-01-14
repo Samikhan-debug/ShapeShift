@@ -9,6 +9,7 @@ import 'package:flutter_application_1/splash.dart';
 
 import 'package:flutter_application_1/workout/workout_detail.dart';
 import 'package:flutter_application_1/workout/workoutprogress.dart';
+import 'package:flutter_application_1/workoutnew.dart';
 import 'package:flutter_application_1/workoutscreen.dart';
 
 void main() async {

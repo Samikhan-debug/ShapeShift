@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -5,7 +7,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Calculator.dart';
 
-import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/Progress.dart';
 import 'package:flutter_application_1/Settings.dart';
 
@@ -23,7 +24,10 @@ import 'package:flutter_application_1/model/UserModel.dart';
 import 'package:flutter_application_1/schedule.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
 import 'package:flutter_application_1/workout/workoutprogress.dart';
+import 'package:flutter_application_1/workoutnew.dart';
 import 'package:flutter_application_1/workoutscreen.dart';
+
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Shop_Page extends StatefulWidget {
   const Shop_Page({super.key});
@@ -47,8 +51,8 @@ class _ShopPageState extends State<Shop_Page> {
 
   @override
   void initState() {
-    // TODO: implement initState
     fetchUserInfo();
+
     super.initState();
   }
 
@@ -247,7 +251,7 @@ class _ShopPageState extends State<Shop_Page> {
                                 title: 'Workout Checker',
                                 tag: 'wc'),
                             makeCategory14(
-                                image: 'assets/45.jpg',
+                                image: 'assets/hehe.png',
                                 title: 'Workout Programs',
                                 tag: 'wc1'),
                           ],
@@ -984,7 +988,7 @@ class _ShopPageState extends State<Shop_Page> {
         child: GestureDetector(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Workoutscreen1()));
+                MaterialPageRoute(builder: (context) => WorkoutDetails()));
           },
           child: Material(
             child: Container(
@@ -1009,7 +1013,7 @@ class _ShopPageState extends State<Shop_Page> {
                       style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 13),
+                          fontSize: 14),
                     )),
               ),
             ),

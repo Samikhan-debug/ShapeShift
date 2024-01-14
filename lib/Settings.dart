@@ -1,8 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home.dart';
+
 import 'package:flutter_application_1/Shop_Page.dart';
+import 'package:flutter_application_1/game.dart';
 import 'package:flutter_application_1/login_form.dart';
 import 'package:flutter_application_1/model/UserModel.dart';
 import 'package:flutter_application_1/services/DatabaseService.dart';
@@ -59,13 +60,13 @@ class _AccountScreenState extends State<AccountScreen> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Program()),
+                MaterialPageRoute(builder: (context) => Shop_Page()),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Shop_Page()),
+                MaterialPageRoute(builder: (context) => GameScreen()),
               );
               break;
             case 2:
@@ -221,20 +222,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 iconColor: Colors.blue,
                 onTap: () {},
               ),
-              const SizedBox(height: 20),
-              SettingSwitch(
-                title: "Dark Mode",
-                icon: Ionicons.earth,
-                bgColor: Colors.purple.shade100,
-                iconColor: Colors.purple,
-                value: isDarkMode,
-                onTap: (value) {
-                  setState(() {
-                    isDarkMode = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
+
               SizedBox(
                 height: 40,
               ),

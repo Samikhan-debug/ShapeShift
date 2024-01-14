@@ -7,11 +7,13 @@ import 'package:flutter_application_1/model/Calendar.dart';
 import 'package:flutter_application_1/model/UserModel.dart';
 import 'package:flutter_application_1/model/WaterPlan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/model/WorkoutPlan.dart';
 
 const String WATER_COLLECTION_REF = "WaterPlan";
 const String ALARM_COLLECTION_REF = "Alarm";
 const String Calendar_COLLECTION_REF = "Calendar";
 const String USERINFO_COLLECTION_REF = "UserInfo";
+const String WORKOUT_COLLECTION_REF = "WorkoutPlan";
 
 class DatabaseService {
   User? _user;
@@ -25,6 +27,8 @@ class DatabaseService {
   late final CollectionReference<AlarmDB> _alarmRef;
 
   late final CollectionReference<UserModelDB> _userRef;
+
+  late final CollectionReference<WorkoutDB> _workoutRef;
 
   final CollectionReference userRef =
       FirebaseFirestore.instance.collection('users');
@@ -62,6 +66,14 @@ class DatabaseService {
           ),
           toFirestore: (UserModel, _) => UserModel.toJson(),
         );
+
+    _workoutRef =
+        _firestore.collection(WORKOUT_COLLECTION_REF).withConverter<WorkoutDB>(
+              fromFirestore: (snapshots, _) => WorkoutDB.fromJson(
+                snapshots.data()!,
+              ),
+              toFirestore: (workout, _) => workout.toJson(),
+            );
   }
 
   Stream<QuerySnapshot<WaterDB>> getUserWaterLevel(
@@ -90,6 +102,27 @@ class DatabaseService {
 
     for (QueryDocumentSnapshot<WaterDB> doc in userRecords.docs) {
       await _waterRef.doc(doc.id).delete();
+    }
+  }
+
+  Stream<QuerySnapshot<WorkoutDB>> getUserWorkoutLevel(String userID) {
+    return _workoutRef.where('userID', isEqualTo: userID).snapshots();
+  }
+
+  void addWorkoutUser(WorkoutDB workout) async {
+    await _workoutRef.add(workout);
+  }
+
+  void updateWorkoutUser(String userID, WaterDB water) {
+    _waterRef.doc(userID).update(water.toJson());
+  }
+
+  void deleteAllWorkoutUserRecords(String userID) async {
+    QuerySnapshot<WorkoutDB> userRecords =
+        await _workoutRef.where('userID', isEqualTo: userID).get();
+
+    for (QueryDocumentSnapshot<WorkoutDB> doc in userRecords.docs) {
+      await _workoutRef.doc(doc.id).delete();
     }
   }
 

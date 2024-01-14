@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_form.dart';
+import 'package:flutter_application_1/model/WorkoutPlan.dart';
+import 'package:flutter_application_1/services/DatabaseService.dart';
 
 class WorkoutDetailView extends StatefulWidget {
   final Map dObj;
@@ -228,6 +232,23 @@ class _WorkoutDetailViewState extends State<WorkoutDetailView> {
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700),
+                          ),
+                          Spacer(), // Added Spacer widget
+                          IconButton(
+                            onPressed: () {
+                              // Implement your refresh logic here
+                              setState(() {
+                                // Reset the completion status of all exercises
+                                exerciseCompletion.clear();
+                                // Reset the progress indicator
+                                progress = 0.0;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.refresh,
+                              color: Colors.white,
+                              size: 24,
+                            ),
                           ),
                           SizedBox(
                             height: 5,
